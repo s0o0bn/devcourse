@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.board.infra.mybatis.mapper.MusicMapper">
+    <insert id="insert">
+        INSERT INTO MUSIC_TB (TITLE, ARTIST, GENRE, MEMO)
+        VALUES (#{title}, #{artist}, #{genre}, #{memo})
+    </insert>
+
+    <update id="update">
+        UPDATE MUSIC_TB
+        SET TITLE=#{title}, ARTIST=#{artist}, GENRE=#{genre}, MEMO=#{memo}
+        WHERE NO = #{no}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM MUSIC_TB
+        WHERE NO = #{no}
+    </delete>
+
+    <select id="selectAll" resultType="com.example.board.music.entity.Music">
+        SELECT NO, TITLE, ARTIST, LIKE_COUNT, CREATED_AT
+        FROM MUSIC_TB
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(NO)
+        FROM MUSIC_TB
+    </select>
+
+    <select id="selectByNo" resultType="com.example.board.music.entity.Music">
+        SELECT NO, TITLE, ARTIST, GENRE, MEMO, AUTHOR, LIKE_COUNT, CREATED_AT
+        FROM MUSIC_TB
+        WHERE NO = #{no}
+    </select>
+</mapper>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Music List</title>
+
+    <style>
+        .music_table {
+            border-collapse: collapse;
+        }
+
+        .music_table_header {
+            border: solid 2px;
+            padding: 5px;
+        }
+
+        .music_item {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        .pagination_bottom {
+            text-align: center;
+            padding: 10px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div th:insert="fragments/header"></div>
+
+    <div>
+        <table class="music_table">
+            <tr class="music_table_header">
+                <td class="music_table_header">No.</td>
+                <td class="music_table_header">제목</td>
+                <td class="music_table_header">아티스트</td>
+                <td class="music_table_header">생성일</td>
+                <td class="music_table_header">좋아요</td>
+            </tr>
+            <tr th:each="music : ${page.getItems()}" class="music_item">
+                <td th:text="${music.no()}" class="music_item"></td>
+                <td class="music_item">
+                    <a th:href="@{/musics/{no}(no=${music.no()})}" th:text="${music.title()}"></a>
+                </td>
+                <td th:text="${music.artist()}" class="music_item"></td>
+                <td th:text="${music.createdAt()}" class="music_item"></td>
+                <td th:text="${music.likeCount()}" class="music_item"></td>
+            </tr>
+            <tr>
+                <td colspan="5" class="pagination_bottom">
+                    <!-- 이전 페이지 링크 -->
+                    <div>
+                        <a th:if="${page.getStartPage() > 1}"
+                           th:href="@{/musics(page=${page.getStartPage() - 1})}"
+                           style="padding: 5px 10px">< 이전</a>
+                    </div>
+
+                    <!-- 페이지 번호 링크 -->
+                    <div>
+                        <th:block th:each="i : ${#numbers.sequence(page.getStartPage(), page.getLastPage())}">
+                            <a th:href="@{/musics(page=${i})}" th:text="${i}" th:styleappend="${i == currentPage ? 'font-weight: bold;' : ''}" style="padding: 5px 10px"></a>
+                        </th:block>
+                    </div>
+
+                    <!-- 다음 페이지 링크 -->
+                    <div>
+                    <a th:if="${page.getLastPage() < page.getTotalPage()}"
+                       th:href="@{/musics(page=${page.getLastPage() + 1})}"
+                       style="padding: 5px 10px">다음 ></a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <a th:href="@{/}">[메인으로]</a>
+        <a th:if="${loginId != null}" th:href="@{/musics/new-form}">[새 음악 추천]</a>
+    </div>
+</body>
+</html>

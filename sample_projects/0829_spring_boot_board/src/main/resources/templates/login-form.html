@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+</head>
+<body>
+    <div th:insert="fragments/header"></div>
+
+    <div>
+        <table>
+            <tr>
+                <td>ID: </td>
+                <td><input type="text" id="username" name="userId" value="grepp"/></td>
+            </tr>
+            <tr>
+                <td>PW: </td>
+                <td><input type="password" id="password" name="password" value="1234"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button id="login-btn">로그인</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <a th:href="@{/}">[메인으로]</a>
+    </div>
+
+    <script>
+        document.getElementById('login-btn').onclick = async function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const body = JSON.stringify({
+                username: username,
+                password: password
+            });
+
+            const response = await fetch('http://localhost:8080/board/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            });
+
+            if (!response.ok) {
+                alert('로그인 실패');
+                return;
+            }
+
+            alert('로그인 성공');
+            location.href ='http://localhost:8080/board';
+        }
+    </script>
+</body>
+</html>

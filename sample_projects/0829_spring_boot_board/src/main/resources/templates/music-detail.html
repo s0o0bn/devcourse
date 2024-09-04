@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Detail</title>
+</head>
+<body>
+    <div th:insert="fragments/header"></div>
+
+    <div>
+        <table border="1">
+            <tr>
+                <td>No. : </td>
+                <td th:text="${music.no()}"></td>
+            </tr>
+            <tr>
+                <td>제목 : </td>
+                <td th:text="${music.title()}"></td>
+            </tr>
+            <tr>
+                <td>아티스트 : </td>
+                <td th:text="${music.artist()}"></td>
+            </tr>
+            <tr>
+                <td>장르 : </td>
+                <td th:text="${music.genre()}"></td>
+            </tr>
+            <tr>
+                <td>메모 : </td>
+                <td th:text="${music.memo()}"></td>
+            </tr>
+            <tr>
+                <td>작성자: </td>
+                <td th:text="${music.author()}"></td>
+            </tr>
+            <tr>
+                <td>생성일 : </td>
+                <td th:text="${music.createdAt()}"></td>
+            </tr>
+            <tr>
+                <td>좋아요 수 : </td>
+                <td th:text="${music.likeCount()}"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div style="margin-top: 20px">
+        <div th:if="${loginId != null} and ${loginId == music.author()}">
+            <a th:href="@{/musics/{no}/update-form(no=${music.no()})}">[수정하기]</a>
+            <a id="delete">[삭제하기]</a>
+        </div>
+        <a th:href="@{/musics(page=1)}">[목록으로]</a>
+    </div>
+
+<script th:inline="javascript">
+    document.getElementById('delete').onclick = async function() {
+        const response = await fetch('/board/musics/' + [[${music.no()}]], {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            alert('delete failure');
+            return false;
+        }
+
+        alert('delete success');
+        location.href = 'http://localhost:8080/board/musics?page=1';
+    }
+</script>
+</body>
+</html>

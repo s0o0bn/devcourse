@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="fragments/header"></div>
+<table>
+    <tr>
+        <td>제목: </td>
+        <td><input type="text" placeholder="제목을 입력하세요." id="title" name="title"/></td>
+    </tr>
+    <tr>
+        <td>아티스트: </td>
+        <td><input placeholder="가수를 입력하세요." id="artist" name="artist"/></td>
+    </tr>
+    <tr>
+        <td>장르: </td>
+        <td><input placeholder="장르를 입력하세요." id="genre" name="genre"/> </td>
+    </tr>
+    <tr>
+        <td>메모: </td>
+        <td><textarea placeholder="간단한 한 마디?" id="memo" name="memo"></textarea></td>
+    </tr>
+    <!--        <tr>-->
+    <!--            <div>-->
+    <!--                <button id="file-add-btn">파일 추가</button>-->
+    <!--                <div id="files"></div>-->
+    <!--            </div>-->
+    <!--        </tr>-->
+    <tr>
+        <td colspan="2" style="margin-top: 10px">
+            <button id="register-btn">등록</button>
+        </td>
+    </tr>
+</table>
+
+<script>
+    document.getElementById('register-btn').onclick = async function() {
+        event.preventDefault();
+
+        const title = document.getElementById('title').value;
+        const artist = document.getElementById('artist').value;
+        const genre = document.getElementById('genre').value;
+        const memo = document.getElementById('memo').value;
+        const body = {
+            title: title,
+            artist: artist,
+            genre: genre,
+            memo: memo
+        }
+        console.log(body)
+
+        const response = await fetch('http://localhost:8080/board/musics', {
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json'
+           },
+            body: JSON.stringify(body)
+        });
+
+        if (!response.ok) {
+            alert('register fail');
+            location.href = '/';
+            return false;
+        }
+
+        location.href = 'http://localhost:8080/board/musics?page=1';
+        return false;
+    }
+</script>
+</body>
+</html>
