@@ -5,6 +5,7 @@ import com.devcourse.gc_coffee.domain.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -17,5 +18,11 @@ public class ProductReadService {
         Product product = repository.findById(UUID.fromString(id))
                 .orElseThrow(NoSuchElementException::new);
         return ProductBasicDto.from(product);
+    }
+
+    public List<ProductDetailDto> getProductsWithTimestamp() {
+        return repository.findAll().stream()
+                .map(ProductDetailDto::from)
+                .toList();
     }
 }

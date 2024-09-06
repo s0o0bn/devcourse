@@ -1,15 +1,14 @@
 package com.devcourse.gc_coffee.web.admin;
 
-import com.devcourse.gc_coffee.service.product.ProductBasicDto;
-import com.devcourse.gc_coffee.service.product.ProductDto;
-import com.devcourse.gc_coffee.service.product.ProductManageService;
-import com.devcourse.gc_coffee.service.product.ProductReadService;
+import com.devcourse.gc_coffee.service.product.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/products")
@@ -33,8 +32,12 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public String getAllProducts() {
-        return "admin/main";
+    public ModelAndView getAllProducts() {
+        ModelAndView mav = new ModelAndView("admin/product/list");
+        List<ProductDetailDto> dtos = readService.getProductsWithTimestamp();
+        mav.addObject("products", dtos);
+
+        return mav;
     }
 
     @PostMapping("")

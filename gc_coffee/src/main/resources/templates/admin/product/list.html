@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Managing Page</title>
+  
+    <style>
+        .table {
+          border-collapse: collapse;
+        }
+  
+        .table_header {
+          border: solid 2px;
+          padding: 5px;
+        }
+  
+        .item {
+          border: 1px solid black;
+          padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+  <a href="#">[고객 주문 관리]</a>
+</div>
+
+<div>
+  <table class="table">
+    <tr class="table_header">
+      <td class="table_header">상품명</td>
+      <td class="table_header">카테고리</td>
+      <td class="table_header">가격</td>
+      <td class="table_header">설명</td>
+      <td class="table_header">등록 일시</td>
+      <td class="table_header">최종 수정 일시</td>
+      <td class="table_header"></td>
+      <td class="table_header"></td>
+    </tr>
+    <tr th:each="product : ${products}" class="item">
+      <td th:text="${product.id()}" class="item" style="display: none"></td>
+      <td th:text="${product.name()}" class="item"></td>
+      <td th:text="${product.category()}" class="item"></td>
+      <td th:text="${product.price()}" class="item"></td>
+      <td th:text="${product.description()}" class="item"></td>
+      <td th:text="${product.createdAt()}" class="item"></td>
+      <td th:text="${product.updatedAt()}" class="item"></td>
+      <td class="item">
+        <a th:href="@{/admin/products/{id}/update(id=${product.id()})}">수정</a>
+      </td>
+      <td class="item">
+        <button class="delete-btn" th:id="${product.id()}">삭제</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<script>
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+  deleteButtons.forEach(button => {
+    button.onclick = async function() {
+      const id = this.id;
+      await fetch("/admin/products/" + id, {
+        method: 'DELETE'
+      });
+
+      alert('삭제되었습니다.');
+      location.reload();
+    }
+  });
+</script>
+</body>
+</html>
