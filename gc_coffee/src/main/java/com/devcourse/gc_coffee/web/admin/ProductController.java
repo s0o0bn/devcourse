@@ -1,6 +1,9 @@
 package com.devcourse.gc_coffee.web.admin;
 
 import com.devcourse.gc_coffee.service.product.*;
+import com.devcourse.gc_coffee.service.product.dto.ProductBasicDto;
+import com.devcourse.gc_coffee.service.product.dto.ProductDetailDto;
+import com.devcourse.gc_coffee.service.product.dto.ProductDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.devcourse.gc_coffee.service.product;
+package com.devcourse.gc_coffee.service.product.dto;
 
 import com.devcourse.gc_coffee.common.util.TimestampUtil;
 import com.devcourse.gc_coffee.domain.product.Product;

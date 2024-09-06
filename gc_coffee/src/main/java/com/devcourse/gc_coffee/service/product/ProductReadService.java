@@ -2,6 +2,8 @@ package com.devcourse.gc_coffee.service.product;
 
 import com.devcourse.gc_coffee.domain.product.Product;
 import com.devcourse.gc_coffee.domain.product.ProductRepository;
+import com.devcourse.gc_coffee.service.product.dto.ProductBasicDto;
+import com.devcourse.gc_coffee.service.product.dto.ProductDetailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

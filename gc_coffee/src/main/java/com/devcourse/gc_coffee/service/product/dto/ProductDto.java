@@ -1,4 +1,4 @@
-package com.devcourse.gc_coffee.service.product;
+package com.devcourse.gc_coffee.service.product.dto;
 
 import com.devcourse.gc_coffee.domain.product.Product;
 import jakarta.validation.constraints.NotBlank;
