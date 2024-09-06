@@ -1,6 +1,7 @@
 package com.devcourse.gc_coffee.domain.product;
 
 import com.devcourse.gc_coffee.common.domain.BaseEntity;
+import com.devcourse.gc_coffee.service.product.ProductDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,11 @@ public class Product extends BaseEntity {
     @NotNull private String category;
     @NotNull private long price;
     private String description;
+
+    public void update(ProductDto dto) {
+        this.name = dto.name();
+        this.category = dto.category();
+        this.price = dto.price();
+        this.description = dto.description();
+    }
 }

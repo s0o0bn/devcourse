@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Modification Page</title>
+</head>
+<body>
+<div>
+  <div>
+    <label for="name">상품명</label>
+    <input id="name" type="text" th:value="${product.name()}"/>
+  </div>
+  <div>
+    <label for="category">카테고리</label>
+    <input id="category" type="text" th:value="${product.category()}"/>
+  </div>
+  <div>
+    <label for="price">가격</label>
+    <input id="price" type="number" th:value="${product.price()}"/>
+  </div>
+  <div>
+    <label for="description">상품명</label>
+    <textarea id="description" th:text="${product.description()}"></textarea>
+  </div>
+
+  <button id="update">수정</button>
+</div>
+
+<script th:inline="javascript">
+  document.getElementById('update').onclick = async function() {
+    const name = document.getElementById('name').value;
+    const category = document.getElementById('category').value;
+    const price = document.getElementById('price').value;
+    const description = document.getElementById('description').value;
+    const body = JSON.stringify({
+      name: name,
+      category: category,
+      price: price,
+      description: description
+    });
+
+    const response = await fetch("/admin/products/" + [[${product.id()}]], {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: body
+    });
+
+    if (response.redirected) {
+      alert('상품 수정되었습니다.');
+      window.location.href = response.url;
+      return;
+    }
+
+    if (response.status === 400) {
+      alert('유효하지 않은 형식입니다.');
+    }
+  }
+</script>
+</body>
+</html>
