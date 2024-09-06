@@ -1,9 +1,8 @@
 package com.devcourse.gc_coffee.admin.product;
 
 import com.devcourse.gc_coffee.product.domain.Product;
-import com.devcourse.gc_coffee.product.repository.ProductRepository;
 import com.devcourse.gc_coffee.product.dto.request.ProductRequest;
-import jakarta.validation.constraints.NotNull;
+import com.devcourse.gc_coffee.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +18,13 @@ public class ProductManageService {
     private final ProductRepository repository;
 
     // C
-    public void addNewProduct(@NotNull ProductRequest dto) {
+    public void addNewProduct(ProductRequest dto) {
         Product product = dto.toEntity();
         repository.save(product);
     }
 
     // U
-    public void modifyProduct(@NotNull String id, @NotNull ProductRequest dto) {
+    public void modifyProduct(String id, ProductRequest dto) {
         Product product = repository.findById(UUID.fromString(id))
                 .orElseThrow(NoSuchElementException::new);
         product.update(dto);
