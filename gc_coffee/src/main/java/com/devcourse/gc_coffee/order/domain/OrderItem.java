@@ -4,9 +4,9 @@ import com.devcourse.gc_coffee.global.auditing.BaseEntity;
 import com.devcourse.gc_coffee.product.domain.Product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "order_items")
@@ -25,14 +25,15 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @Builder
-    public OrderItem(String category, long price, int quantity) {
-        this.category = category;
-        this.price = price;
+    public OrderItem(Product product, int quantity) {
+        this.product = product;
+        this.category = product.getCategory();
+        this.price = product.getPrice();
         this.quantity = quantity;
     }
 }
