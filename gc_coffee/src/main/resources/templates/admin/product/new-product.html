@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Creation Page</title>
+</head>
+<body>
+<div>
+    <div>
+        <input id="name" type="text" />
+        <label for="name">상품명</label>
+    </div>
+    <div>
+        <input id="category" type="text" />
+        <label for="category">카테고리</label>
+    </div>
+    <div>
+        <input id="price" type="number" />
+        <label for="price">가격</label>
+    </div>
+    <div>
+        <textarea id="description"></textarea>
+        <label for="description">상품명</label>
+    </div>
+
+    <button id="create">등록</button>
+</div>
+
+<script>
+    document.getElementById('create').onclick = async function() {
+        const name = document.getElementById('name').value;
+        const category = document.getElementById('category').value;
+        const price = document.getElementById('price').value;
+        const description = document.getElementById('description').value;
+        const body = JSON.stringify({
+            name: name,
+            category: category,
+            price: price,
+            description: description
+        });
+
+        const response = await fetch("http://localhost:8080/admin/products", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        });
+
+        if (response.redirected) {
+            alert('상품 등록되었습니다.');
+            window.location.href = response.url;
+            return;
+        }
+
+        if (response.status === 400) {
+            alert('유효하지 않은 형식입니다.');
+        }
+    }
+</script>
+</body>
+</html>
