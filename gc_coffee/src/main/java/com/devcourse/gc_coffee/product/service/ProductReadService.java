@@ -13,20 +13,25 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProductReadService {
     private final ProductRepository repository;
 
-    @Transactional(readOnly = true)
     public ProductDto getProductWithoutTimestamp(String id) {
         return repository.findById(UUID.fromString(id))
                 .map(ProductDto::from)
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    @Transactional(readOnly = true)
     public List<ProductDetailDto> getProductsWithTimestamp() {
         return repository.findAll().stream()
                 .map(ProductDetailDto::from)
+                .toList();
+    }
+
+    public List<ProductDto> getProductsWithoutTimestamp() {
+        return repository.findAll().stream()
+                .map(ProductDto::from)
                 .toList();
     }
 }
