@@ -6,6 +6,7 @@ import com.devcourse.gc_coffee.service.product.ProductManageService;
 import com.devcourse.gc_coffee.service.product.ProductReadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,5 +47,12 @@ public class ProductController {
     public String modifyProduct(@PathVariable("id") String id, @RequestBody @Valid ProductDto dto) {
         manageService.modifyProduct(id, dto);
         return "redirect:/admin/products";
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteProduct(@PathVariable("id") String id) {
+        manageService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
     }
 }

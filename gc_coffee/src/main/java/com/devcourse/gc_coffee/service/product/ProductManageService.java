@@ -32,4 +32,7 @@ public class ProductManageService {
     }
 
     // D
+    public void deleteProduct(String id) {
+        repository.deleteById(UUID.fromString(id));
+    }
 }
