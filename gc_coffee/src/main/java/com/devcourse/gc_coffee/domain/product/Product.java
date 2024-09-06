@@ -1,13 +1,16 @@
 package com.devcourse.gc_coffee.domain.product;
 
 import com.devcourse.gc_coffee.common.domain.BaseEntity;
-import com.devcourse.gc_coffee.service.product.ProductDto;
+import com.devcourse.gc_coffee.domain.order.OrderItem;
+import com.devcourse.gc_coffee.service.product.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +28,9 @@ public class Product extends BaseEntity {
     private String category;
     private long price;
     private String description;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @Builder
     public Product(String name, String category, long price, String description) {
