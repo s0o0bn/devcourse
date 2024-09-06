@@ -1,4 +1,4 @@
-package com.devcourse.gc_coffee.common.domain;
+package com.devcourse.gc_coffee.global.auditing;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

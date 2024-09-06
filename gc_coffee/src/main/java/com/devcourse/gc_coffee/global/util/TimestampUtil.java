@@ -1,4 +1,4 @@
-package com.devcourse.gc_coffee.common.util;
+package com.devcourse.gc_coffee.global.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

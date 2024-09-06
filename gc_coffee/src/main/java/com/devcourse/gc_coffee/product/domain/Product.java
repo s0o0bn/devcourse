@@ -1,8 +1,8 @@
-package com.devcourse.gc_coffee.domain.product;
+package com.devcourse.gc_coffee.product.domain;
 
-import com.devcourse.gc_coffee.common.domain.BaseEntity;
-import com.devcourse.gc_coffee.domain.order.OrderItem;
-import com.devcourse.gc_coffee.service.product.dto.ProductDto;
+import com.devcourse.gc_coffee.global.auditing.BaseEntity;
+import com.devcourse.gc_coffee.order.domain.OrderItem;
+import com.devcourse.gc_coffee.product.dto.request.ProductRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -40,7 +40,7 @@ public class Product extends BaseEntity {
         this.description = description;
     }
 
-    public void update(ProductDto dto) {
+    public void update(ProductRequest dto) {
         this.name = dto.name();
         this.category = dto.category();
         this.price = dto.price();

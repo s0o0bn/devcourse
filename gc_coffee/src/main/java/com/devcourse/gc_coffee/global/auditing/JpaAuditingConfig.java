@@ -1,9 +1,9 @@
-package com.devcourse.gc_coffee.common.config;
+package com.devcourse.gc_coffee.global.auditing;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
 @EnableJpaAuditing
-public class JpaConfig {
+public class JpaAuditingConfig {
 }

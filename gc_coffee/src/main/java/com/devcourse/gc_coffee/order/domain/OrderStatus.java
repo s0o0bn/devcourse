@@ -1,4 +1,4 @@
-package com.devcourse.gc_coffee.domain.order;
+package com.devcourse.gc_coffee.order.domain;
 
 import lombok.AllArgsConstructor;
 

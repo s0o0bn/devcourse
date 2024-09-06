@@ -1,4 +1,4 @@
-package com.devcourse.gc_coffee.web.admin;
+package com.devcourse.gc_coffee.admin.main;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,7 +1,7 @@
-package com.devcourse.gc_coffee.service.product.dto;
+package com.devcourse.gc_coffee.product.dto;
 
-import com.devcourse.gc_coffee.common.util.TimestampUtil;
-import com.devcourse.gc_coffee.domain.product.Product;
+import com.devcourse.gc_coffee.global.util.TimestampUtil;
+import com.devcourse.gc_coffee.product.domain.Product;
 import lombok.Builder;
 
 @Builder

@@ -1,6 +1,6 @@
-package com.devcourse.gc_coffee.domain.order;
+package com.devcourse.gc_coffee.order.domain;
 
-import com.devcourse.gc_coffee.common.domain.BaseEntity;
+import com.devcourse.gc_coffee.global.auditing.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
