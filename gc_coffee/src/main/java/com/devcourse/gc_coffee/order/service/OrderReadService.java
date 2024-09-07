@@ -2,6 +2,7 @@ package com.devcourse.gc_coffee.order.service;
 
 import com.devcourse.gc_coffee.admin.order.AdminOrderResponse;
 import com.devcourse.gc_coffee.global.util.TimestampUtil;
+import com.devcourse.gc_coffee.order.dto.OrderBasicDto;
 import com.devcourse.gc_coffee.order.dto.OrderDto;
 import com.devcourse.gc_coffee.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,11 @@ public class OrderReadService {
                 .toList();
 
         return new AdminOrderResponse(todayOrders, completedOrders);
+    }
+
+    public List<OrderBasicDto> getOrdersOf(String email) {
+        return orderRepository.findAllWithItemsByEmail(email)
+                .stream().map(OrderBasicDto::from)
+                .toList();
     }
 }

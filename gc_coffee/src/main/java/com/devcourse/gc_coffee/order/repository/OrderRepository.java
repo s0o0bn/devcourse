@@ -17,4 +17,7 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
 
     @Query("SELECT o FROM Order o JOIN FETCH o.orderItems WHERE o.createdAt BETWEEN :from AND :to ORDER BY o.createdAt DESC")
     List<Order> findAllWithItemsByCreatedAtBetween(LocalDateTime from, LocalDateTime to);
+
+    @Query("SELECT o FROM Order o JOIN FETCH o.orderItems WHERE o.email = :email ORDER BY o.createdAt DESC")
+    List<Order> findAllWithItemsByEmail(String email);
 }
