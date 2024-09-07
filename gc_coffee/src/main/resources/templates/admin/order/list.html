@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>order Managing Page</title>
+  
+    <style>
+      .header_container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .column {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .header {
+        flex: 1;
+        padding: 10px;
+        border-top: 2px solid;
+        border-right: 2px solid;
+        border-bottom: 2px solid;
+      }
+
+      .item {
+        flex: 1;
+        padding: 10px;
+        border-bottom: 1px solid black;
+        border-right: 1px solid;
+      }
+
+        .hidden {
+          display: none;
+        }
+
+        .order_id {
+          display: block;
+          width: 100px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .order_details_span {
+          color: blue
+        }
+    </style>
+</head>
+<body>
+<div>
+  <a th:href="@{/admin/products}">[상품 관리]</a>
+  <a th:href="@{/admin}">[메인화면]</a>
+  <hr style="margin-top: 5px">
+</div>
+
+<div>
+  <div class="header_container">
+    <h3>[** 오늘 처리해야 하는 주문 **]</h3>
+    <button id="set-delivery-btn" style="align-self: flex-end; margin: 20px">일괄배송</button>
+  </div>
+  <div class="container">
+    <!-- Header row -->
+    <div class="row">
+      <div class="header" style="border-left: 2px solid">주문 ID</div>
+      <div class="header">주문자</div>
+      <div class="header">주소</div>
+      <div class="header">우편번호</div>
+      <div class="header">총 금액</div>
+      <div class="header">주문 상태</div>
+      <div class="header">등록 일시</div>
+      <div class="header">최종 수정 일시</div>
+    </div>
+
+    <!-- Data rows -->
+    <div th:each="order : ${orders.today()}" class="column">
+      <div class="row">
+        <div class="item order_id" style="border-left: 1px solid">
+          <span class="order_details_span" th:text="${order.id()}"></span>
+        </div>
+        <div class="item" th:text="${order.email()}"></div>
+        <div class="item" th:text="${order.address()}"></div>
+        <div class="item" th:text="${order.postcode()}"></div>
+        <div class="item" th:text="${order.totalPrice()}"></div>
+        <div class="item" th:text="${order.orderStatus()}"></div>
+        <div class="item" th:text="${order.createdAt()}"></div>
+        <div class="item" th:text="${order.updatedAt() != null ? order.updatedAt() : 'N/A'}"></div>
+      </div>
+      <div class="hidden row" style="border: 1px solid; border-top: 0px;">
+        <ul>
+          <li th:each="detail : ${order.details()}">
+            상품명: <span th:text="${detail.category()}"></span>
+            , 수량: <span th:text="${detail.quantity()}"></span>
+            , 가격: <span th:text="${detail.price()}"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <hr style="margin-top: 15px">
+</div>
+
+
+<div>
+  <h3>[** 나머지 주문 **]</h3>
+  <div class="container">
+    <!-- Header row -->
+    <div class="row">
+      <div class="header" style="border-left: 2px solid">주문 ID</div>
+      <div class="header">주문자</div>
+      <div class="header">주소</div>
+      <div class="header">우편번호</div>
+      <div class="header">총 금액</div>
+      <div class="header">주문 상태</div>
+      <div class="header">등록 일시</div>
+      <div class="header">최종 수정 일시</div>
+    </div>
+
+    <!-- Data rows -->
+    <div th:each="order : ${orders.others()}" class="column">
+      <div class="row">
+        <div class="item order_id" style="border-left: 1px solid">
+          <span class="order_details_span" th:text="${order.id()}"></span>
+        </div>
+        <div class="item" th:text="${order.email()}"></div>
+        <div class="item" th:text="${order.address()}"></div>
+        <div class="item" th:text="${order.postcode()}"></div>
+        <div class="item" th:text="${order.totalPrice()}"></div>
+        <div class="item" th:text="${order.orderStatus()}"></div>
+        <div class="item" th:text="${order.createdAt()}"></div>
+        <div class="item" th:text="${order.updatedAt() != null ? order.updatedAt() : 'N/A'}"></div>
+      </div>
+      <div class="hidden row" style="border: 1px solid; border-top: 0px;">
+        <ul>
+          <li th:each="detail : ${order.details()}">
+            상품명: <span th:text="${detail.category()}"></span>
+            , 수량: <span th:text="${detail.quantity()}"></span>
+            , 가격: <span th:text="${detail.price()}"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <hr style="margin-top: 15px">
+</div>
+
+<script>
+  const details = document.querySelectorAll(".order_details_span");
+  details.forEach(span => {
+    span.onclick = function() {
+      const div = span.parentElement.parentElement.nextElementSibling;
+      if (div.classList.contains("hidden")) {
+        div.classList.remove("hidden");
+      } else {
+        div.classList.add("hidden");
+      }
+    }
+  });
+</script>
+</body>
+</html>

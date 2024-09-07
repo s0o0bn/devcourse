@@ -14,4 +14,12 @@ public class TimestampUtil {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return timestamp.format(formatter);
     }
+
+    public static LocalDateTime getTodayAt(int hour) {
+        return LocalDateTime.now()
+                .withHour(hour)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0);
+    }
 }

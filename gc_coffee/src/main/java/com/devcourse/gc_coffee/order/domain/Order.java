@@ -2,7 +2,10 @@ package com.devcourse.gc_coffee.order.domain;
 
 import com.devcourse.gc_coffee.global.auditing.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +36,11 @@ public class Order extends BaseEntity {
         this.address = address;
         this.postcode = postcode;
         this.orderStatus = orderStatus;
+    }
+
+    public long getTotalPrice() {
+        return orderItems.stream()
+                .mapToLong(item -> item.getPrice() * item.getQuantity())
+                .sum();
     }
 }

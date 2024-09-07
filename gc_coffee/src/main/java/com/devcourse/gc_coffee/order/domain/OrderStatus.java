@@ -1,7 +1,9 @@
 package com.devcourse.gc_coffee.order.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public enum OrderStatus {
     PAYMENT_COMPLETED("결제 완료"),
