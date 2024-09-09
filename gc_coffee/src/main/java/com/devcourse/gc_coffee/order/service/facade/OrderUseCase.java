@@ -1,7 +1,9 @@
 package com.devcourse.gc_coffee.order.service.facade;
 
+import com.devcourse.gc_coffee.order.domain.Order;
 import com.devcourse.gc_coffee.order.domain.OrderItem;
 import com.devcourse.gc_coffee.order.dto.request.OrderRequest;
+import com.devcourse.gc_coffee.order.dto.request.UpdateOrderRequest;
 import com.devcourse.gc_coffee.order.service.OrderItemService;
 import com.devcourse.gc_coffee.order.service.OrderService;
 import com.devcourse.gc_coffee.product.domain.Product;
@@ -16,7 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CreateOrderUseCase {
+public class OrderUseCase {
     private final OrderService orderService;
     private final ProductReadService productReadService;
     private final OrderItemService orderItemService;
@@ -27,5 +29,11 @@ public class CreateOrderUseCase {
         Map<String, Product> productsOfOrder = productReadService.mapProductWithId(productIds);
         List<OrderItem> orderItems = orderItemService.createOrderItems(request.items(), productsOfOrder);
         orderService.saveOrder(request, orderItems);
+    }
+
+    @Transactional
+    public void modifyProductQuantityOfOrder(String id, UpdateOrderRequest request) {
+        Order order = orderService.getOrderForUpdate(id, request.email());
+        orderItemService.modifyOrderItems(order.getId(), request.items());
     }
 }

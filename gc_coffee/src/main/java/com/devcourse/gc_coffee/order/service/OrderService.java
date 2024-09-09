@@ -28,15 +28,25 @@ public class OrderService {
     }
 
     public void deleteOrder(String id, String email) {
+        Order order = getValidOrder(id, email);
+        order.cancel();
+        orderRepository.save(order);
+    }
+
+    public Order getOrderForUpdate(String id, String email) {
+        // 주문 수정 유효 여부 조회
+        return getValidOrder(id, email);
+    }
+
+    private Order getValidOrder(String id, String email) {
         Order order = orderRepository.findById(UUID.fromString(id))
                 .orElseThrow(NoSuchElementException::new);
         if (!order.isOrderedBy(email)) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException(OrderExceptionType.UNAUTHORIZED.getMessage());
         }
-        if (!order.canBeCanceled()) {
-            throw new BadRequestException("This order is already processed.");
+        if (!order.isModifiable()) {
+            throw new BadRequestException(OrderExceptionType.IS_NOT_MODIFIABLE.getMessage());
         }
-        order.cancel();
-        orderRepository.save(order);
+        return order;
     }
 }

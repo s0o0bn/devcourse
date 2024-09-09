@@ -36,4 +36,8 @@ public class OrderItem extends BaseEntity {
         this.price = product.getPrice();
         this.quantity = quantity;
     }
+
+    public void updateQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

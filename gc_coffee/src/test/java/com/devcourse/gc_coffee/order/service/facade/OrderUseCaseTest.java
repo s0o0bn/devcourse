@@ -24,9 +24,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CreateOrderUseCaseTest {
+class OrderUseCaseTest {
     @InjectMocks
-    private CreateOrderUseCase createOrderUseCase;
+    private OrderUseCase orderUseCase;
 
     @Mock
     private OrderService orderService;
@@ -47,7 +47,7 @@ class CreateOrderUseCaseTest {
         // when
         when(productReadService.mapProductWithId(anyList())).thenReturn(orderProduct);
         when(orderItemService.createOrderItems(anyList(), anyMap())).thenReturn(orderItems);
-        createOrderUseCase.createOrder(request);
+        orderUseCase.createOrder(request);
 
         // then
         verify(productReadService).mapProductWithId(request.getProductsIds());

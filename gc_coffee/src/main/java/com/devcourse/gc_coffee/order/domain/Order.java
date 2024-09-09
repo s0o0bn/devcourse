@@ -48,7 +48,7 @@ public class Order extends BaseEntity {
         return this.email.equals(email);
     }
 
-    public boolean canBeCanceled() {
+    public boolean isModifiable() {
         return this.orderStatus.equals(OrderStatus.PAYMENT_COMPLETED);
     }
 
