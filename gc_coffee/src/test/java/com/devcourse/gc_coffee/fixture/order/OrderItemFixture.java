@@ -5,13 +5,13 @@ import com.devcourse.gc_coffee.product.domain.Product;
 
 import java.util.List;
 
-import static com.devcourse.gc_coffee.fixture.product.ProductFixture.getProduct;
+import static com.devcourse.gc_coffee.fixture.product.ProductFixture.getProductWithId;
 
 public class OrderItemFixture {
 
     public static List<OrderItem> getOrderItems() {
-        Product product1 = getProduct();
-        Product product2 = getProduct();
+        Product product1 = getProductWithId();
+        Product product2 = getProductWithId();
         OrderItem item1 = new OrderItem(product1, 1);
         OrderItem item2 = new OrderItem(product2, 2);
 

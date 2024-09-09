@@ -1,7 +1,10 @@
 package com.devcourse.gc_coffee.order.service.facade;
 
+import com.devcourse.gc_coffee.order.domain.Order;
 import com.devcourse.gc_coffee.order.domain.OrderItem;
+import com.devcourse.gc_coffee.order.dto.OrderProductQuantityDto;
 import com.devcourse.gc_coffee.order.dto.request.OrderRequest;
+import com.devcourse.gc_coffee.order.dto.request.UpdateOrderRequest;
 import com.devcourse.gc_coffee.order.service.OrderItemService;
 import com.devcourse.gc_coffee.order.service.OrderService;
 import com.devcourse.gc_coffee.product.domain.Product;
@@ -16,10 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Map;
 
+import static com.devcourse.gc_coffee.fixture.order.OrderFixture.getOrderWithId;
+import static com.devcourse.gc_coffee.fixture.order.OrderRequestFixture.getOrderProductQuantityDtos;
 import static com.devcourse.gc_coffee.fixture.order.OrderRequestFixture.getOrderRequest;
 import static com.devcourse.gc_coffee.fixture.product.ProductFixture.getProductWithId;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -53,5 +57,22 @@ class OrderUseCaseTest {
         verify(productReadService).mapProductWithId(request.getProductsIds());
         verify(orderItemService).createOrderItems(request.items(), orderProduct);
         verify(orderService).saveOrder(request, orderItems);
+    }
+
+    @Test
+    @DisplayName("주문한 상품의 수량을 수정한다.")
+    void modify_ordered_product_quantity() {
+        // given
+        Order order = getOrderWithId();
+        List<OrderProductQuantityDto> items = getOrderProductQuantityDtos();
+        UpdateOrderRequest request = new UpdateOrderRequest(order.getEmail(), items);
+
+        // when
+        when(orderService.getOrderForUpdate(anyString(), anyString())).thenReturn(order);
+        orderUseCase.modifyProductQuantityOfOrder(order.getId().toString(), request);
+
+        // then
+        verify(orderService).getOrderForUpdate(order.getId().toString(), order.getEmail());
+        verify(orderItemService).modifyOrderItems(order.getId(), items);
     }
 }
