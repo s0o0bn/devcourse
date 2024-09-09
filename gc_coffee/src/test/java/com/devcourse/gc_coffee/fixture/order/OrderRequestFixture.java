@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class OrderRequestFixture {
     public static OrderRequest getOrderRequest() {
-        return new OrderRequest("email", "address", "postcode", getOrderProductQuantityDtos());
+        return new OrderRequest("user@email.com", "address", "postcode", getOrderProductQuantityDtos());
     }
 
     public static List<OrderProductQuantityDto> getOrderProductQuantityDtos() {

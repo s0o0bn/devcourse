@@ -3,6 +3,7 @@ package com.devcourse.gc_coffee.order.dto.request;
 import com.devcourse.gc_coffee.order.domain.Order;
 import com.devcourse.gc_coffee.order.domain.OrderStatus;
 import com.devcourse.gc_coffee.order.dto.OrderProductQuantityDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -23,6 +24,7 @@ public record OrderRequest(@Email String email,
                 .build();
     }
 
+    @JsonIgnore
     public List<UUID> getProductsIds() {
         return items.stream()
                 .map(item -> UUID.fromString(item.productId()))
