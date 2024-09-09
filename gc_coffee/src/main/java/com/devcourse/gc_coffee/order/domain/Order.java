@@ -43,4 +43,16 @@ public class Order extends BaseEntity {
                 .mapToLong(item -> item.getPrice() * item.getQuantity())
                 .sum();
     }
+
+    public boolean isOrderedBy(String email) {
+        return this.email.equals(email);
+    }
+
+    public boolean canBeCanceled() {
+        return this.orderStatus.equals(OrderStatus.PAYMENT_COMPLETED);
+    }
+
+    public void cancel() {
+        this.orderStatus = OrderStatus.CANCELED;
+    }
 }

@@ -14,6 +14,16 @@ public class GlobalExceptionHandler {
         return handleExceptionInternal("Resources what you requested are not found.", HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedException(UnauthorizedException e) {
+        return handleExceptionInternal(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException e) {
+        return handleExceptionInternal(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleGlobalException(RuntimeException e) {
         return handleExceptionInternal("Something gone wrong.", HttpStatus.INTERNAL_SERVER_ERROR);
