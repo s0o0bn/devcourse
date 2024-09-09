@@ -1,11 +1,13 @@
 package com.devcourse.gc_coffee.global.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TimestampUtil {
-    private TimestampUtil() {}
-
     public static String format(LocalDateTime timestamp) {
         if (timestamp == null) {
             return null;
