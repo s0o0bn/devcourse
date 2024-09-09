@@ -55,4 +55,8 @@ public class Order extends BaseEntity {
     public void cancel() {
         this.orderStatus = OrderStatus.CANCELED;
     }
+
+    public void deliver() {
+        this.orderStatus = OrderStatus.IN_PROGRESS;
+    }
 }

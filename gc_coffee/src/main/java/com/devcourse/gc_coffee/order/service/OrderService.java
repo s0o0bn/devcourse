@@ -5,6 +5,7 @@ import com.devcourse.gc_coffee.global.exception.UnauthorizedException;
 import com.devcourse.gc_coffee.order.domain.Order;
 import com.devcourse.gc_coffee.order.domain.OrderItem;
 import com.devcourse.gc_coffee.order.dto.request.OrderRequest;
+import com.devcourse.gc_coffee.order.dto.request.ProcessOrderRequest;
 import com.devcourse.gc_coffee.order.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,12 @@ public class OrderService {
             throw new BadRequestException(OrderExceptionType.IS_NOT_MODIFIABLE.getMessage());
         }
         return order;
+    }
+
+    public void processOrders(ProcessOrderRequest request) {
+        List<UUID> orderIds = request.getOrderIds();
+        List<Order> orders = orderRepository.findAllById(orderIds);
+        orders.forEach(Order::deliver);
+        orderRepository.saveAll(orders);
     }
 }
